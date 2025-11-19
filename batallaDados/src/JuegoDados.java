@@ -3,25 +3,98 @@ import java.util.Scanner;
 
 public class JuegoDados {
     public static void main(String[] args) throws Exception {
-        Dado jug1 = new Dado();
-        Dado jug2 = new Dado();
+        String jug1, jug2;
+        Dado dJug1A = new Dado();
+        Dado dJug1B = new Dado(); 
+        Dado dJug2A = new Dado(); 
+        Dado dJug2B = new Dado();
+        int ronda, puntosJug1 = 0, puntosJug2 = 0, sumaJud1 = 0, sumaJud2 = 0;
         Scanner tcl = new Scanner(System.in);
         
-        System.out.println(jug1.lanzar());
+        
+        System.out.println("------------BATALLA DE DADOS-----------");
+        System.out.print("Nombre jugador 1: ");
+        jug1 = tcl.nextLine();
+        System.out.print("Nombre jugador 2: ");
+        jug2 = tcl.nextLine();
+
+        for (ronda = 1; ronda <= 5; ronda++) {
+            //Jugador 1
+            System.out.println("\n=== RONDA " + ronda + " ===");
+            dJug1A.lanzar();
+            dJug1B.lanzar();
+            sumaJud1 = dJug1A.getValorActual() + dJug1B.getValorActual();
+            System.out.println("-Lanza " + jug1 + ": " + dJug1A.getValorActual() + " + " + dJug1B.getValorActual() + " = " + sumaJud1);
+            
+            if (dJug1A.esPar() && dJug1B.esPar() && dJug1A.getValorActual() == dJug1B.getValorActual()) {
+                System.out.println("** " + jug1 + " obtiene BONUS por dobles pares");
+                puntosJug1++;
+            }
+
+            //Jugador 2
+            System.out.println("\n=== RONDA " + ronda + " ===");
+            dJug2A.lanzar();
+            dJug2B.lanzar();
+            sumaJud2 = dJug2A.getValorActual() + dJug2B.getValorActual();
+            System.out.println("-Lanza " + jug2 + ": " + dJug2A.getValorActual() + " + " + dJug2B.getValorActual() + " = " + sumaJud2);
+
+            if (dJug2A.esPar() && dJug2B.esPar() && dJug2A.getValorActual() == dJug2B.getValorActual()) {
+                System.out.println("** " + jug2 + " obtiene BONUS por dobles pares");
+                puntosJug2++;
+            }
+
+            
+            if (sumaJud1 > sumaJud2) {
+                System.out.println("Ha ganado " + jug1);
+                puntosJug1++;  
+            } 
+    
+            if (sumaJud1 < sumaJud2) {
+                System.out.println("Ha ganado " + jug2);
+                puntosJug2++;  
+            } 
+    
+            if (sumaJud1 == sumaJud2) {
+                System.out.println("Ronda empatada");
+                puntosJug1++;
+                puntosJug2++;  
+            } 
+    
+            System.out.printf("Puntuaciones: %s -> %d | %S -> %d\n", jug1, puntosJug1, jug2, puntosJug2);
+        }
+
+        if (puntosJug1 > puntosJug2) {
+            System.out.println("Ha ganado " + jug1);
+        }
+        if (puntosJug1 < puntosJug2) {
+            System.out.println("Ha ganado " + jug2);
+        }
+        if (puntosJug1 == puntosJug2) {
+            System.out.println("Empate");
+        }
        
+
+        tcl.close();
     }
 }
 
 class Dado {
     private int numeroCaras, ultimoValor, valorActual;
-    private String nombre1, nombre2;
     
-
+    //Constructor
     public Dado() {
         this.numeroCaras = 6;
         this.valorActual = 0;
+        this.ultimoValor = 0;
     }
 
+    public Dado(int numeroCaras) {
+        this.numeroCaras = numeroCaras;
+        this.valorActual = 0;
+        this.ultimoValor = 0;
+    }
+
+    //Get y set
     public int getNumeroCaras() {
         return numeroCaras;
     }
@@ -29,41 +102,29 @@ class Dado {
     public void setNumeroCaras(int numeroCaras) {
         this.numeroCaras = numeroCaras;
     }
+    
+    //Métodos propios
+    public void lanzar() {
+        Random random = new Random();
+        this.ultimoValor = this.valorActual;
+        this.valorActual = random.nextInt(numeroCaras) + 1;
+    }
 
     public int getValorActual() {
         return valorActual;
-    }
-
-    public void setValorActual(int valorActual) {
-        this.valorActual = valorActual;
     }
 
     public int getUltimoValor() {
         return ultimoValor;
     }
 
-    public void setUltimoValor(int ultimoValor) {
-        this.ultimoValor = ultimoValor;
-    }
-
-    public String getNombre1() {
-        System.out.println("Nombre del jugador 1: ");
-        
-        return nombre1;
-    }
-
-    public String getNombre2() {
-        return nombre2;
-    }
-
-    public int lanzar() {
-        Random random = new Random();
-        int numero = random.nextInt(6) + 1;
-        return numero;
-    }
 
     public boolean esPar() {
-        return true;
+        if (this.valorActual % 2 == 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void resetear() {
@@ -73,6 +134,6 @@ class Dado {
 
     @Override
     public String toString() {
-        return "";
+        return "Este dado tiene" + this.numeroCaras + ". \nEl valor actual es" + this.valorActual + ". \nEl valor anterior era " + this.ultimoValor + ".\n";
     }
 }   
