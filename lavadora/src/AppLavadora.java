@@ -1,6 +1,27 @@
+import java.util.Scanner;
+
 public class AppLavadora {
     public static void main(String[] args) throws Exception {
-        System.out.println("Hello, World!");
+        Lavadora lavado = new Lavadora();
+        Scanner sc = new Scanner(System.in);
+        int opc;
+
+        System.out.println("=== LAVADORA ===");
+        System.out.println("1. Abrir puerta");
+        System.out.println("2. Cerrar puerta");
+        System.out.println("3. Llenar agua");
+        System.out.println("4. Vaciar agua");
+        System.out.println("5. Establecer temperatura");
+        System.out.println("6. Iniciar lavado");
+        System.out.println("7. Detener lavado");
+        System.out.println("8. Ver estado");
+        System.out.println("0. Salir");
+        System.out.print("¿Qué necesitas hacer? ");
+        opc = sc.nextInt();
+
+        System.out.println(lavado.abrirPuerta());
+        
+        sc.close();
     }
 }
 
@@ -45,18 +66,33 @@ class Lavadora {
     }
 
     public boolean vaciarAgua() {
-        return true;
+        if (this.nivelAgua > 1) {
+            this.nivelAgua = 0;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean iniciarLavado() {
-        return true;
+        if (this.puertaAbierta && this.nivelAgua > 0) {
+           return this.enFuncionamiento = true;
+             
+        } else {
+            return false;
+        }
     }
 
     public boolean detenerLavado() {
-        return true;
+         return this.enFuncionamiento;
+        
     }
 
     public void mostrarEstado() {
+        System.out.println("La puerta está " + this.puertaAbierta);
+        System.out.println("La lavadora está " + this.enFuncionamiento);
+        System.out.println("El nivel del agua es " + this.nivelAgua);
+        System.out.println("La temperatura es de " + this.temperatura);
 
     }
 
