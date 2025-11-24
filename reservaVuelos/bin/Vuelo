@@ -1,0 +1,19 @@
+public class Vuelo {
+    private String numeroVuelo, origen, destino;
+    private int asientosDisponibles;
+
+    public Vuelo() {
+        this.numeroVuelo = "";
+        this.origen = "";
+        this.destino = "";
+        this.asientosDisponibles = 0;
+    }
+
+    public void reservarAsiento() {
+
+    }
+
+    public void mostrarInformacionVuelo() {
+        
+    }
+}
