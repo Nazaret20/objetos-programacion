@@ -14,21 +14,31 @@ public class AppAscensor {
         System.out.print("¿Qué necesitas hacer?: ");
     }
     public static void main(String[] args) throws Exception {
-        Ascensor ascensor = new Ascensor(12);
+        Ascensor ascensor = new Ascensor(11);
         Scanner sc = new Scanner(System.in);
 
-        int opc;
+        int opc, pisoUser;
         
+        System.out.println("Bienvenido al ascensor de Hotel Gran Vía\n");
         do {
             menuAscensor();
-            opc = Integer.parseInt(sc.nextLine());
+            opc = sc.nextInt();
 
             switch (opc) {
                 case 1:
-                    boolean subioPiso = ascensor.bajarPiso();
+                    System.out.print("¿En qué piso estás del 0 al 11?: ");
+                    pisoUser = sc.nextInt();
+                    System.out.println("El ascensor está en la planta" + ascensor.getPisoActual());
+                    
+                    if (pisoUser > ascensor.getPisoActual() || pisoUser > ascensor.getPisoActual()) {
+                        ascensor.irAPiso(pisoUser);
+                    }
+                    System.out.println("El ascensor ha llegado a su piso");
                     
                     break;
             
+                    case 4:
+                        ascensor.verificarEstado();
                 default:
                     break;
             }

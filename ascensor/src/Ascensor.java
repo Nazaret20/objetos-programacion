@@ -18,31 +18,35 @@ public class Ascensor {
 
     // Métodos propios
     public boolean subirPiso() {
-        if (this.puertaAbierta == true || this.pisoMaximo > this.pisoMaximo) {
+        if (this.pisoActual == this.pisoMaximo && this.puertaAbierta == true) {
             this.enMovimiento = false;
         }
 
         if (this.enMovimiento == false) {
+            this.enMovimiento = true;
             this.pisoActual++;
-            return this.enMovimiento = true;
-        } else {
             return this.enMovimiento = false;
+        } else {
+            return this.enMovimiento = true;
         }
-
     }
 
     public boolean bajarPiso() {
-        if (this.puertaAbierta == true || this.pisoMaximo < 0) {
-            return false;
-        } else {
+        if (this.pisoActual < 0 && this.puertaAbierta == true) {
+            this.enMovimiento = false;
+        } 
+
+        if (this.enMovimiento == false) {
             this.enMovimiento = true;
             this.pisoActual--;
             return this.enMovimiento = false;
+        } else {
+            return this.enMovimiento = true;
         }
     }
 
     public boolean abrirPuerta() {
-        if (this.enMovimiento == true || this.puertaAbierta == true) {
+        if (this.enMovimiento == true && this.puertaAbierta == true) {
             return false;  
         } else {
             return true;
@@ -53,22 +57,24 @@ public class Ascensor {
         if (this.puertaAbierta == true) {
             return this.puertaAbierta = false;
         } else {
-            return true;
+            return this.puertaAbierta = true;
         } 
     }
 
     public boolean irAPiso(int pisoDestino) {
-        if (pisoDestino >= 0 || pisoDestino <= this.pisoMaximo) {
+        if (pisoDestino >= 0) {
             subirPiso();
-        }
-
-        if (this.puertaAbierta == true) {
-            return false;
-        } else {
-            return true;
-        }
-
+        } 
         
+        if (pisoDestino <= this.pisoMaximo) {
+            bajarPiso();
+        }
+
+        if (cerrarPuerta() == false) {
+            return true;
+        } else {
+            return false;
+        }  
     }
 
     public void activarEmergencia() {
