@@ -18,13 +18,12 @@ public class AppTechCorp {
         int opc;
 
         Scanner sc = new Scanner(System.in);
-        opc = Integer.parseInt(sc.nextLine());
-
-        System.out.println("¡Bienvenido a TechCorp!");
+        
+        System.out.println("¡Bienvenido a TechCorp!\n");
 
         do {
-
             menu();
+            opc = Integer.parseInt(sc.nextLine());
 
             switch (opc) {
                 case 1:
@@ -37,17 +36,64 @@ public class AppTechCorp {
                     int zona = Integer.parseInt(sc.nextLine());
 
                     System.out.println("Introduce el ID: ");
-                    int id = Integer.parseInt(sc.nextLine());
-
-                    if (id == tarjeta1.getId() || id == tarjeta2.getId() || id == tarjeta3.getId()) {
-                        return true;
-                    } else { 
-                        return false;
+                    String id = sc.nextLine();
+                    
+                    //Verificar tarjeta 1
+                    if (id.equals(tarjeta1.getId())) {
+                        if (tarjeta1.verificarAcceso(zona)) {
+                            System.out.println("ACCESO PERMITIDO"); 
+                        } else {
+                            System.out.print("ACCESO DENEGADO ");
+                            if (tarjeta2.isActiva() == false) {
+                                System.out.println("por tarjeta desactivada");
+                            } 
+                            if (zona > tarjeta2.getNivelAcceso() || zona < tarjeta2.getNivelAcceso()) {
+                                System.out.println("por nivel no correspondiente");
+                            }
+                        }
+                    } else {
+                        System.out.println("Tarjeta no verificada");
                     }
 
+                    //Verificar tarjeta 2
+                    if (id.equals(tarjeta2.getId())) {
+                        if (tarjeta2.verificarAcceso(zona)) {
+                            System.out.println("ACCESO PERMITIDO");
+                        } else {
+                            System.out.print("ACCESO DENEGADO ");
+                            if (tarjeta2.isActiva() == false) {
+                                System.out.println("por tarjeta desactivada");
+                            } 
+                            if (zona > tarjeta2.getNivelAcceso() || zona < tarjeta2.getNivelAcceso()) {
+                                System.out.println("por nivel no correspondiente");
+                            }
+                        }
+                    } else {
+                        System.out.println("Tarjeta no verificada");
+                    }
 
+                    //Verificar tarjeta 3
+                    if (id.equals(tarjeta3.getId())) {
+                        if (tarjeta3.verificarAcceso(zona)) {
+                            System.out.println("ACCESO PERMITIDO");
+                        } else {
+                            System.out.print("ACCESO DENEGADO ");
+                            if (tarjeta3.isActiva() == false) {
+                                System.out.println("por tarjeta desactivada");
+                            } 
+                            if (zona > tarjeta3.getNivelAcceso() || zona < tarjeta3.getNivelAcceso()) {
+                                System.out.println("por nivel no correspondiente");
+                            }
+                        }
+                    } else {
+                        System.out.println("Tarjeta no verificada");
+                    }
+                    
                     break;
 
+                case 2:
+                    
+                    break;
                 default:
                     break;
             }
@@ -57,3 +103,5 @@ public class AppTechCorp {
         sc.close();
     }
 }
+
+// || id == tarjeta2.getId() || id == tarjeta3.getId()
