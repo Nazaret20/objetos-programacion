@@ -6,7 +6,6 @@ public class Reserva {
         this.nombrePasajero = nombrePasajero;
         this.numeroPasaporte = numeroPasaporte;
         this.vuelo = vuelo;
-        // this.vuelo = new Vuelo(vuelo.getNumeroVuelo(), vuelo.getOrigen(), vuelo.getDestino(), vuelo.getAsientosDisponibles());
     }
 
     // Método propio

@@ -14,12 +14,17 @@ public class Tarjeta {
         this.id = id;
         this.propietario = propietario;
         this.activa = true;
+        if(this.nivelAcceso > 4)
+            this.nivelAcceso = 4;
+        if(this.nivelAcceso < 1)
+            this.nivelAcceso = 1;
         this.nivelAcceso = nivelAcceso;
     }
 
     //Métodos propios
     public boolean activarTarjeta() {
-        if (this.activa) {
+        if (!this.activa) {
+            this.activa = true;
             return true;
         } else {
             return false;
@@ -28,14 +33,15 @@ public class Tarjeta {
 
     public boolean desactivarTarjeta() {
         if (!this.activa) {
-            return true;
-        } else {
             return false;
+        } else {
+            this.activa = false;
+            return true;
         }
     }
 
     public boolean aumentarNivelAcceso() {
-        if (!this.activa || this.nivelAcceso <= 4) {
+        if (!this.activa && this.nivelAcceso == 4) {
             return false;
         } else {
             this.nivelAcceso++;
@@ -44,10 +50,10 @@ public class Tarjeta {
     }
 
     public boolean disminuirNivelAcceso() {
-        if (!this.activa || this.nivelAcceso >= 1) {
+        if (!this.activa && this.nivelAcceso == 1) {
             return false;
         } else {
-            this.nivelAcceso++;
+            this.nivelAcceso--;
             return true;
         }
     }
@@ -61,10 +67,20 @@ public class Tarjeta {
     }
 
     public void mostrarInformacion() {
+        String estado;
+        if (isActiva()) {
+            estado = "Activa";
+        } else {
+            estado = "Inactiva";
+        }
+
+        System.out.println("--------------------------");
         System.out.println("ID de la tarjeta: " + getId());
         System.out.println("Propietario: " + getPropietario());
-        System.out.println("Estado: " + isActiva());
+        System.out.println("Estado: " + estado);
         System.out.println("Nivel de acceso: " + getNivelAcceso());
+        System.out.println("--------------------------");
+
     }
 
     //Getter y setter

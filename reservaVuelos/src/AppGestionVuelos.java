@@ -47,8 +47,8 @@ public class AppGestionVuelos {
 
                         if (asientosDisponibles > 0) {
                             Reserva reserva = new Reserva(nombrePax, pasaportePax, vuelo1);
-                            System.out.println("✓ Reserva confirmada");
-                            reserva.mostrarInformacionReserva();
+                            System.out.println("✓ Reserva confirmada - Código: ");
+                            //Falta poner código reserva
                         } else {
                             System.out.println("✗ Lo sentimos, el vuelo está completo. No hay asientos disponibles.");
                         }
