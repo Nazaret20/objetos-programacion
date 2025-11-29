@@ -11,16 +11,17 @@ public class Vuelo {
     }
 
     // Métodos propios
-    public void reservarAsiento() {
-        if (this.asientosDisponibles == 0) {
+    //Caracterítica añadida: poder reservar más asientos si son familia
+    public void reservarAsiento(int cuantosAsientos) {
+        if (this.asientosDisponibles <= 0) {
             System.out.println("El vuelo está lleno");
         } else {
-            this.asientosDisponibles -= 1;
+            this.asientosDisponibles -= cuantosAsientos;
         }
     }
 
     public void mostrarInformacionVuelo() {
-        System.out.println("\tNúmero de vuelo: " + getNumeroVuelo());
+        System.out.println("\n\tNúmero de vuelo: " + getNumeroVuelo());
         System.out.println("\tOrigen: " + getOrigen());
         System.out.println("\tDestino: " + getDestino());
         System.out.println("\tAsiestos disponibles: " + getAsientosDisponibles() + " de " + getAsientosTotales());
