@@ -3,11 +3,13 @@ import java.util.Random;
 public class Reserva {
     private String nombrePasajero, numeroPasaporte;
     private Vuelo vuelo;
+    String codigoReserva;
 
     public Reserva(String nombrePasajero, String numeroPasaporte, Vuelo vuelo) {
         this.nombrePasajero = nombrePasajero;
         this.numeroPasaporte = numeroPasaporte;
         this.vuelo = vuelo;
+        this.codigoReserva = generarCodigoReserva(); //Guardar el num random del método
     }
 
     // Método propio
@@ -19,14 +21,22 @@ public class Reserva {
         vuelo.mostrarInformacionVuelo();
     }
 
-    //Generar un número random para hacer códigos de reserva con formato para que tenga 3 dígitos con el 0
+    //Método extra para generar un número random para crear códigos de reserva, y con formato para que tenga 3 dígitos
     public String generarCodigoReserva() {
         Random random = new Random();
-        
-        //Hasta 1000 porque incluye el 0
-        int numRandom = random.nextInt(1000);
+
+        //Iniciamos en 1 para que no dé un número a 0 completamente
+        int numRandom = random.nextInt(1,999);
         String codigoReserva = String.format("R%03d", numRandom);
         return codigoReserva;
+    }
+
+    //Método extra para eliminar los datos de la reserva
+    public boolean eliminarReserva(Vuelo vuelo) {
+        this.nombrePasajero = "";
+        this.numeroPasaporte = "";
+        this.vuelo = vuelo;
+        return true;
     }
 
     // Getters
@@ -40,6 +50,11 @@ public class Reserva {
 
     public Vuelo getVuelo() {
         return vuelo;
+    }
+
+    //Getter para poder acceder desde el main en el caso 2 (asignar código) y 3 (comparar código)
+    public String getCodigoReserva() {
+        return codigoReserva;
     }
 
 }
