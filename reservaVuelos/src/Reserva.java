@@ -1,28 +1,41 @@
 import java.util.Random;
 
 public class Reserva {
-    private String nombrePasajero, numeroPasaporte;
+    private String nombrePasajero, numeroPasaporte, acompNom1, acompPass1, acompNom2, acompPass2;
     private Vuelo vuelo;
     String codigoReserva;
     int cuantosAsientos;
 
 
-    public Reserva(String nombrePasajero, String numeroPasaporte, Vuelo vuelo, int cuantosAsientos) {
+    public Reserva(String nombrePasajero, String numeroPasaporte, Vuelo vuelo, int cuantosAsientos, String acompNom1, String acompPass1, String acompNom2, String acompPass2) {
         this.nombrePasajero = nombrePasajero;
         this.numeroPasaporte = numeroPasaporte;
         this.vuelo = vuelo;
         this.codigoReserva = generarCodigoReserva(); //Guardar el num random del método
         this.cuantosAsientos = cuantosAsientos; /* Variable que le va a pasar en el caso 3 y 4, el número de la cantidad de asientos que el usuario quiere. En el 3 para crear reserva y en el 4 para eliminarla. */
-       
+        this.acompNom1 = acompNom1;
+        this.acompPass1 = acompPass1;
+        this.acompNom2 = acompNom2;
+        this.acompPass2 = acompPass2;
     }
 
     // Método propio
     public void mostrarInformacionReserva() {
-        System.out.println("Nombre del pasajero: " + this.nombrePasajero);
-        System.out.println("Número de pasaporte: " + this.numeroPasaporte);
+        System.out.println("\nNúmero de asientos reservados: " + this.cuantosAsientos);
+        System.out.println("Pasajeros: ");
+        System.out.println("\tNombre: " + this.nombrePasajero + " - " + "Pasaporte: " + this.numeroPasaporte);
+
+
+        if (this.acompNom1 != null && this.acompPass1 != null) {
+             System.out.println("\tNombre: " + this.acompNom1 + " - " + "Pasaporte: " + this.acompPass1);
+        }
+
+         if (this.acompNom2 != null && this.acompPass2 != null) {
+             System.out.println("\tNombre: " + this.acompNom2 + " - " + "Pasaporte: " + this.acompPass2);
+        }
+
         //Print para que la reserva tenga un extra de información
-        System.out.println("Número de asientos reservados: " + this.cuantosAsientos);
-        System.out.println("Datos del vuelo reservado: ");
+        System.out.println("\nDatos del vuelo reservado: ");
 
         vuelo.mostrarInformacionVuelo();
     }

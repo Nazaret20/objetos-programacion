@@ -53,12 +53,49 @@ public class AppGestionVuelos {
                         int asientosDisponibles = vuelo1.getAsientosDisponibles();
 
                         if (asientosDisponibles > 0) {
-                            // Añadir más asientos a la reserva
-                            System.out.print("\n¿Cuántos asientos quieres reservar?: ");
-                            int cuantosAsientos1 = Integer.parseInt(sc.nextLine());
+                            //Recordatorio de los asientos disponibles que hay
+                            System.out.println("\nDe este vuelo quedan " + vuelo1.getAsientosDisponibles() + " asientos disponibles.");
 
-                            // Crear reserva
-                            reserva1 = new Reserva(nombrePax, pasaportePax, vuelo1, cuantosAsientos1);
+                            // Añadir más asientos a la reserva
+                            System.out.print("¿Cuántos asientos quieres reservar? (max. 3): ");
+                            int cuantosAsientos1 = Integer.parseInt(sc.nextLine());
+                            
+                            while (cuantosAsientos1 > 3) {
+                                System.out.print("\nSolo puedes reservar 3 asientos. ¿Cuántos asientos quieres reservar?: ");
+                                cuantosAsientos1 = Integer.parseInt(sc.nextLine());
+                            }
+                            
+                            
+                             if (cuantosAsientos1 == 2) {
+                                System.out.print("\nIntroduce el nombre de la persona: ");
+                                String acompNom1 = sc.nextLine();
+
+                                System.out.print("\nIntroduce el pasaporte de la persona: ");
+                                String acompPass1 = sc.nextLine();
+
+
+                                reserva1 = new Reserva(nombrePax, pasaportePax, vuelo1, cuantosAsientos1, acompNom1, acompPass1, null, null);
+
+                            } else if (cuantosAsientos1 == 3) {
+                                System.out.print("\nIntroduce el nombre de la persona: ");
+                                String acompNom1 = sc.nextLine();
+
+                                System.out.print("\nIntroduce el pasaporte de la persona: ");
+                                String acompPass1 = sc.nextLine();
+
+                                 System.out.print("\nIntroduce el nombre de la persona: ");
+                                String acompNom2 = sc.nextLine();
+
+                                System.out.print("\nIntroduce el pasaporte de la persona: ");
+                                String acompPass2 = sc.nextLine();
+
+
+                                reserva1 = new Reserva(nombrePax, pasaportePax, vuelo1, cuantosAsientos1, acompNom1, acompPass1, acompNom2, acompPass2);
+                            } else {
+                                // Crear reserva
+                                reserva1 = new Reserva(nombrePax, pasaportePax, vuelo1, cuantosAsientos1, null, null, null, null);
+                            }
+
 
                             /* Mensaje para confirmar reserva junto al método que genera el código de reserva aleatoriamente */
                             System.out.println("✔ Reserva confirmada - Código: " + reserva1.getCodigoReserva());
@@ -75,12 +112,49 @@ public class AppGestionVuelos {
                         int asientosDisponibles = vuelo2.getAsientosDisponibles();
 
                         if (asientosDisponibles > 0) {
-                            // Añadir más asientos a la reserva
-                            System.out.print("\n¿Cuántos asientos quieres reservar?: ");
-                            int cuantosAsientos2 = Integer.parseInt(sc.nextLine());
+                            //Recordatorio de los asientos disponibles que hay
+                            System.out.println("\nDe este vuelo quedan " + vuelo2.getAsientosDisponibles() + " asientos disponibles.");
 
-                            // Crear reserva
-                            reserva2 = new Reserva(nombrePax, pasaportePax, vuelo2, cuantosAsientos2);
+                            // Añadir más asientos a la reserva
+                            System.out.print("¿Cuántos asientos quieres reservar? (max. 3): ");
+                            int cuantosAsientos2 = Integer.parseInt(sc.nextLine());
+                            
+                           while (cuantosAsientos2 > 3) {
+                                System.out.print("\nSolo puedes reservar 3 asientos. ¿Cuántos asientos quieres reservar?: ");
+                                cuantosAsientos2 = Integer.parseInt(sc.nextLine());
+                            }
+                            
+                            
+                             if (cuantosAsientos2 == 2) {
+                                System.out.print("\nIntroduce el nombre de la persona: ");
+                                String acompNom1 = sc.nextLine();
+
+                                System.out.print("\nIntroduce el pasaporte de la persona: ");
+                                String acompPass1 = sc.nextLine();
+
+
+                                reserva2 = new Reserva(nombrePax, pasaportePax, vuelo2, cuantosAsientos2, acompNom1, acompPass1, null, null);
+
+                            } else if (cuantosAsientos2 == 3) {
+                                System.out.print("\nIntroduce el nombre de la persona: ");
+                                String acompNom1 = sc.nextLine();
+
+                                System.out.print("\nIntroduce el pasaporte de la persona: ");
+                                String acompPass1 = sc.nextLine();
+
+                                 System.out.print("\nIntroduce el nombre de la persona: ");
+                                String acompNom2 = sc.nextLine();
+
+                                System.out.print("\nIntroduce el pasaporte de la persona: ");
+                                String acompPass2 = sc.nextLine();
+
+
+                                reserva2 = new Reserva(nombrePax, pasaportePax, vuelo2, cuantosAsientos2, acompNom1, acompPass1, acompNom2, acompPass2);
+                            } else {
+                                // Crear reserva
+                                reserva2 = new Reserva(nombrePax, pasaportePax, vuelo2, cuantosAsientos2, null, null, null, null);
+                            }
+
 
                             /* Mensaje para confirmar reserva junto al método que genera el código de reserva aleatoriamente */
                             System.out.println("✔ Reserva confirmada - Código: " + reserva2.getCodigoReserva());

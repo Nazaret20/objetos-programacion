@@ -21,19 +21,12 @@ public class Vuelo {
             this.asientosDisponibles -= cuantosAsientos;
         }
     }
-    // public void reservarAsiento() {
-    //     if (this.asientosDisponibles <= 0) {
-    //         System.out.println("El vuelo está lleno");
-    //     } else {
-    //         this.asientosDisponibles -= 1;
-    //     }
-    // }
 
     public void mostrarInformacionVuelo() {
         System.out.println("\n\tNúmero de vuelo: " + this.numeroVuelo);
         System.out.println("\tOrigen: " + this.origen);
         System.out.println("\tDestino: " + this.destino);
-        System.out.println("\tAsientos disponibles: " + this.asientosDisponibles + " de " + this.asientosDisponibles);
+        System.out.println("\tAsientos disponibles: " + this.asientosDisponibles + " de " + this.asientosTotales);
     }
 
     //Método extra para devolver los asientos eliminados de una reserva
