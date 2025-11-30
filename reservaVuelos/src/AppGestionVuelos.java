@@ -11,6 +11,7 @@ public class AppGestionVuelos {
         System.out.print("¿Qué necesitas hacer?: ");
     }
 
+    /* Método de experimentación. Evita repetir las mismas preguntas en cada caso (introducir el nombre y el pasaporte), y además hacer un pequeño bucle en el caso de que el dato introducido esté vacío y que solo salga del mismo cuando ha introducido los datos */
     public static String validarDatosNoVacio(Scanner sc, String pregunta) {
         System.out.print(pregunta);
         String dato = sc.nextLine();
@@ -55,8 +56,8 @@ public class AppGestionVuelos {
                     System.out.print("\n¿Qué vuelo quieres reservar?: ");
                     int eleccionVueloUsuario = Integer.parseInt(sc.nextLine());
 
-                   
-                    String nombrePax = validarDatosNoVacio(sc, "\nIntroduce tu nombre");
+                   //Implementación del método validar datos, que lee el Scanner y además le pasamos la pregunta correcta para cada caso
+                    String nombrePax = validarDatosNoVacio(sc, "\nIntroduce tu nombre: ");
                     String pasaportePax = validarDatosNoVacio(sc, "\nIntroduce tu pasaporte: ");
 
                     // Verificar asientos disponibles vuelo 1
@@ -71,20 +72,20 @@ public class AppGestionVuelos {
                             System.out.print("¿Cuántos asientos quieres reservar? (max. 3): ");
                             int cuantosAsientos1 = Integer.parseInt(sc.nextLine());
                             
+                            //Bucle para asegurarnos que el máximo que introduce sean 3, y no 10 asientos
                             while (cuantosAsientos1 > 3) {
                                 System.out.print("\nSolo puedes reservar 3 asientos. ¿Cuántos asientos quieres reservar?: ");
                                 cuantosAsientos1 = Integer.parseInt(sc.nextLine());
                             }
                             
-                            
+                            //Si la persona decide añadir un acompañante, se haría la reserva con sus datos y los del compañero, serían entonces 2 reservas
                             if (cuantosAsientos1 == 2) {
-                               
                                 String acompNom1 = validarDatosNoVacio(sc, "\nIntroduce el nombre de la persona: ");
                                 String acompPass1 = validarDatosNoVacio(sc, "\nIntroduce tu pasaporte: ");
 
-
                                 reserva1 = new Reserva(nombrePax, pasaportePax, vuelo1, cuantosAsientos1, acompNom1, acompPass1, null, null);
 
+                                //Por el contrario si son dos personas acompañantes, se introducen los datos para ambos, y serían 3 en total en la reserva
                             } else if (cuantosAsientos1 == 3) {
                                 String acompNom1 = validarDatosNoVacio(sc, "\nIntroduce el nombre de la persona: ");
                                 String acompPass1 = validarDatosNoVacio(sc, "\nIntroduce tu pasaporte: ");
@@ -94,10 +95,10 @@ public class AppGestionVuelos {
 
                                 reserva1 = new Reserva(nombrePax, pasaportePax, vuelo1, cuantosAsientos1, acompNom1, acompPass1, acompNom2, acompPass2);
                             } else {
-                                // Crear reserva
+
+                                /*  Crear reserva SOLO para la persona que introduce los datos, en caso de que no lleve ni 1 ni 2 personas más, el resto no van a contar porque están en null */
                                 reserva1 = new Reserva(nombrePax, pasaportePax, vuelo1, cuantosAsientos1, null, null, null, null);
                             }
-
 
                             /* Mensaje para confirmar reserva junto al método que genera el código de reserva aleatoriamente */
                             System.out.println("✔ Reserva confirmada - Código: " + reserva1.getCodigoReserva());
@@ -126,7 +127,6 @@ public class AppGestionVuelos {
                                 cuantosAsientos2 = Integer.parseInt(sc.nextLine());
                             }
                             
-                            
                             if (cuantosAsientos2 == 2) {
                                 String acompNom1 = validarDatosNoVacio(sc, "\nIntroduce el nombre de la persona: ");
                                 String acompPass1 = validarDatosNoVacio(sc, "\nIntroduce tu pasaporte: ");
@@ -142,6 +142,7 @@ public class AppGestionVuelos {
 
                                 reserva2 = new Reserva(nombrePax, pasaportePax, vuelo2, cuantosAsientos2, acompNom1, acompPass1, acompNom2, acompPass2);
                             } else {
+
                                 // Crear reserva
                                 reserva2 = new Reserva(nombrePax, pasaportePax, vuelo2, cuantosAsientos2, null, null, null, null);
                             }
@@ -165,7 +166,7 @@ public class AppGestionVuelos {
                     /* Para comprobar que la reserva no es null porque se ha creado en el caso 2; o al contrario por si introducimos caso 3 sin hacer reserva, hacemos la condición con != y además que coincida con el código de reserva */
                     if (reserva1 != null && reservaUser.equals(reserva1.getCodigoReserva())) {
                         reserva1.mostrarInformacionReserva();
-
+                        
                     } else if (reserva2 != null && reservaUser.equals(reserva2.getCodigoReserva())) {
                         reserva2.mostrarInformacionReserva();
 
@@ -181,7 +182,9 @@ public class AppGestionVuelos {
                     if (reserva1 != null && reservaUser.equals(reserva1.getCodigoReserva())) {
                         int cuantosAsientos1 = reserva1.getCuantosAsientos();
 
-                        reserva1.getVuelo().devolverAsiento(cuantosAsientos1);                      
+                        //Implementamos el método para devolver los asientos
+                        reserva1.getVuelo().devolverAsiento(cuantosAsientos1);
+                        //Y anulamos la reserva volviéndola a poner en null                       
                         reserva1 = null;
                         System.out.println("✔ Reserva cancelada exitosamente");
 
@@ -191,11 +194,11 @@ public class AppGestionVuelos {
                         reserva2.getVuelo().devolverAsiento(cuantosAsientos2);
                         reserva2 = null;
                         System.out.println("✔ Reserva cancelada exitosamente");
-
-                        
+  
                     } else {
                         System.out.println("✖ No se encontró ninguna reserva con ese código");
                     }
+
                     break;
                 
                 case 0:

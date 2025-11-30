@@ -12,7 +12,9 @@ public class Reserva {
         this.numeroPasaporte = numeroPasaporte;
         this.vuelo = vuelo;
         this.codigoReserva = generarCodigoReserva(); //Guardar el num random del método
-        this.cuantosAsientos = cuantosAsientos; /* Variable que le va a pasar en el caso 3 y 4, el número de la cantidad de asientos que el usuario quiere. En el 3 para crear reserva y en el 4 para eliminarla. */
+        /* Variable que le va a pasar en el caso 3 y 4, el número de la cantidad de asientos que el usuario quiere. En el 3 para crear reserva y en el 4 para eliminarla. */
+        this.cuantosAsientos = cuantosAsientos;
+        //Variables para poder guardar los datos en caso de que se añada algún acompañante, como el máximo son 3 personas en la reserva, creamos datos para posibles 1 o 2 acompañantes
         this.acompNom1 = acompNom1;
         this.acompPass1 = acompPass1;
         this.acompNom2 = acompNom2;
@@ -25,13 +27,13 @@ public class Reserva {
         System.out.println("Pasajeros: ");
         System.out.println("\tNombre: " + this.nombrePasajero + " - " + "Pasaporte: " + this.numeroPasaporte);
 
-
+        //Verificar que cuando los acompañantes no sean null, se añadirán a los datos de la información de la reserva
         if (this.acompNom1 != null && this.acompPass1 != null) {
-             System.out.println("\tNombre: " + this.acompNom1 + " - " + "Pasaporte: " + this.acompPass1);
+            System.out.println("\tNombre: " + this.acompNom1 + " - " + "Pasaporte: " + this.acompPass1);
         }
 
          if (this.acompNom2 != null && this.acompPass2 != null) {
-             System.out.println("\tNombre: " + this.acompNom2 + " - " + "Pasaporte: " + this.acompPass2);
+            System.out.println("\tNombre: " + this.acompNom2 + " - " + "Pasaporte: " + this.acompPass2);
         }
 
         //Print para que la reserva tenga un extra de información
