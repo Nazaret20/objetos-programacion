@@ -11,6 +11,19 @@ public class AppGestionVuelos {
         System.out.print("¿Qué necesitas hacer?: ");
     }
 
+    public static String validarDatosNoVacio(Scanner sc, String pregunta) {
+        System.out.print(pregunta);
+        String dato = sc.nextLine();
+        
+        while (dato == "") {
+            System.out.print("\nEl campo no puede estar vacío. Introdúcelo de nuevo: ");
+            dato = sc.nextLine();
+        }
+        
+        return dato;
+    }
+    
+
     public static void main(String[] args) throws Exception {
         Scanner sc = new Scanner(System.in);
         Vuelo vuelo1 = new Vuelo("AA123", "Madrid", "Nueva York", 150);
@@ -42,11 +55,9 @@ public class AppGestionVuelos {
                     System.out.print("\n¿Qué vuelo quieres reservar?: ");
                     int eleccionVueloUsuario = Integer.parseInt(sc.nextLine());
 
-                    System.out.print("\nIntroduce tu nombre: ");
-                    String nombrePax = sc.nextLine();
-
-                    System.out.print("\nIntroduce tu pasaporte: ");
-                    String pasaportePax = sc.nextLine();
+                   
+                    String nombrePax = validarDatosNoVacio(sc, "\nIntroduce tu nombre");
+                    String pasaportePax = validarDatosNoVacio(sc, "\nIntroduce tu pasaporte: ");
 
                     // Verificar asientos disponibles vuelo 1
                     if (eleccionVueloUsuario == 1) {
@@ -66,29 +77,20 @@ public class AppGestionVuelos {
                             }
                             
                             
-                             if (cuantosAsientos1 == 2) {
-                                System.out.print("\nIntroduce el nombre de la persona: ");
-                                String acompNom1 = sc.nextLine();
-
-                                System.out.print("\nIntroduce el pasaporte de la persona: ");
-                                String acompPass1 = sc.nextLine();
+                            if (cuantosAsientos1 == 2) {
+                               
+                                String acompNom1 = validarDatosNoVacio(sc, "\nIntroduce el nombre de la persona: ");
+                                String acompPass1 = validarDatosNoVacio(sc, "\nIntroduce tu pasaporte: ");
 
 
                                 reserva1 = new Reserva(nombrePax, pasaportePax, vuelo1, cuantosAsientos1, acompNom1, acompPass1, null, null);
 
                             } else if (cuantosAsientos1 == 3) {
-                                System.out.print("\nIntroduce el nombre de la persona: ");
-                                String acompNom1 = sc.nextLine();
+                                String acompNom1 = validarDatosNoVacio(sc, "\nIntroduce el nombre de la persona: ");
+                                String acompPass1 = validarDatosNoVacio(sc, "\nIntroduce tu pasaporte: ");
 
-                                System.out.print("\nIntroduce el pasaporte de la persona: ");
-                                String acompPass1 = sc.nextLine();
-
-                                 System.out.print("\nIntroduce el nombre de la persona: ");
-                                String acompNom2 = sc.nextLine();
-
-                                System.out.print("\nIntroduce el pasaporte de la persona: ");
-                                String acompPass2 = sc.nextLine();
-
+                                String acompNom2 = validarDatosNoVacio(sc, "\nIntroduce el nombre de la persona: ");
+                                String acompPass2 = validarDatosNoVacio(sc, "\nIntroduce tu pasaporte: ");
 
                                 reserva1 = new Reserva(nombrePax, pasaportePax, vuelo1, cuantosAsientos1, acompNom1, acompPass1, acompNom2, acompPass2);
                             } else {
@@ -119,35 +121,24 @@ public class AppGestionVuelos {
                             System.out.print("¿Cuántos asientos quieres reservar? (max. 3): ");
                             int cuantosAsientos2 = Integer.parseInt(sc.nextLine());
                             
-                           while (cuantosAsientos2 > 3) {
+                            while (cuantosAsientos2 > 3) {
                                 System.out.print("\nSolo puedes reservar 3 asientos. ¿Cuántos asientos quieres reservar?: ");
                                 cuantosAsientos2 = Integer.parseInt(sc.nextLine());
                             }
                             
                             
-                             if (cuantosAsientos2 == 2) {
-                                System.out.print("\nIntroduce el nombre de la persona: ");
-                                String acompNom1 = sc.nextLine();
-
-                                System.out.print("\nIntroduce el pasaporte de la persona: ");
-                                String acompPass1 = sc.nextLine();
-
+                            if (cuantosAsientos2 == 2) {
+                                String acompNom1 = validarDatosNoVacio(sc, "\nIntroduce el nombre de la persona: ");
+                                String acompPass1 = validarDatosNoVacio(sc, "\nIntroduce tu pasaporte: ");
 
                                 reserva2 = new Reserva(nombrePax, pasaportePax, vuelo2, cuantosAsientos2, acompNom1, acompPass1, null, null);
 
                             } else if (cuantosAsientos2 == 3) {
-                                System.out.print("\nIntroduce el nombre de la persona: ");
-                                String acompNom1 = sc.nextLine();
+                                String acompNom1 = validarDatosNoVacio(sc, "\nIntroduce el nombre de la persona: ");
+                                String acompPass1 = validarDatosNoVacio(sc, "\nIntroduce tu pasaporte: ");
 
-                                System.out.print("\nIntroduce el pasaporte de la persona: ");
-                                String acompPass1 = sc.nextLine();
-
-                                 System.out.print("\nIntroduce el nombre de la persona: ");
-                                String acompNom2 = sc.nextLine();
-
-                                System.out.print("\nIntroduce el pasaporte de la persona: ");
-                                String acompPass2 = sc.nextLine();
-
+                                String acompNom2 = validarDatosNoVacio(sc, "\nIntroduce el nombre de la persona: ");
+                                String acompPass2 = validarDatosNoVacio(sc, "\nIntroduce tu pasaporte: ");
 
                                 reserva2 = new Reserva(nombrePax, pasaportePax, vuelo2, cuantosAsientos2, acompNom1, acompPass1, acompNom2, acompPass2);
                             } else {
