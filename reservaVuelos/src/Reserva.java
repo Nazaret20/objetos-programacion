@@ -21,7 +21,7 @@ public class Reserva {
         vuelo.mostrarInformacionVuelo();
     }
 
-    //Método extra para generar un número random para crear códigos de reserva, y con formato para que tenga 3 dígitos
+    /* Método extra para generar un número random para crear códigos de reserva, y con formato para que tenga 3 dígitos */
     public String generarCodigoReserva() {
         Random random = new Random();
 
@@ -29,14 +29,6 @@ public class Reserva {
         int numRandom = random.nextInt(1,999);
         String codigoReserva = String.format("R%03d", numRandom);
         return codigoReserva;
-    }
-
-    //Método extra para eliminar los datos de la reserva
-    public boolean eliminarReserva(Vuelo vuelo) {
-        this.nombrePasajero = "";
-        this.numeroPasaporte = "";
-        this.vuelo = vuelo;
-        return true;
     }
 
     // Getters
@@ -52,7 +44,7 @@ public class Reserva {
         return vuelo;
     }
 
-    //Getter para poder acceder desde el main en el caso 2 (asignar código) y 3 (comparar código)
+    /* Getter para poder acceder desde el main en el caso 2 (asignar código) y 3 (comparar código) */
     public String getCodigoReserva() {
         return codigoReserva;
     }

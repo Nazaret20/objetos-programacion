@@ -18,9 +18,9 @@ public class AppGestionVuelos {
 
         int opc;
         String reservaUser;
-        int cuantosAsientos1, cuantosAsientos2;
+        //int cuantosAsientos1, cuantosAsientos2;
 
-        // Iniciamos las reservas en null para poder acceder en el caso 3, ya que en el caso 2 vamos a guardar los datos una vez hecha la reserva
+        /* Iniciamos las reservas en null para poder acceder en el caso 3, ya que en el caso 2 vamos a guardar los datos una vez hecha la reserva */
         Reserva reserva1 = null;
         Reserva reserva2 = null;
 
@@ -33,6 +33,7 @@ public class AppGestionVuelos {
                     vuelo1.mostrarInformacionVuelo();
                     vuelo2.mostrarInformacionVuelo();
                     break;
+                    
                 case 2:
                     System.out.println("\nVuelo 1:");
                     vuelo1.mostrarInformacionVuelo();
@@ -54,17 +55,16 @@ public class AppGestionVuelos {
 
                         if (asientosDisponibles > 0) {
                             // Añadir más asientos a la reserva
-                            System.out.print("\n¿Cuántos asientos quieres reservar?: ");
-                            cuantosAsientos1 = Integer.parseInt(sc.nextLine());
+                            // System.out.print("\n¿Cuántos asientos quieres reservar?: ");
+                            //cuantosAsientos1 = Integer.parseInt(sc.nextLine());
 
                             // Crear reserva
                             reserva1 = new Reserva(nombrePax, pasaportePax, vuelo1);
 
-                            // Mensaje para confirmar reserva junto al método que genera el código de
-                            // reserva aleatoriamente
+                            /* Mensaje para confirmar reserva junto al método que genera el código de reserva aleatoriamente */
                             System.out.println("✔ Reserva confirmada - Código: " + reserva1.getCodigoReserva());
 
-                            vuelo1.reservarAsiento(cuantosAsientos1);
+                            vuelo1.reservarAsiento();
 
                         } else {
                             System.out.println("✖ Lo sentimos, el vuelo está completo. No hay asientos disponibles.");
@@ -77,32 +77,28 @@ public class AppGestionVuelos {
 
                         if (asientosDisponibles > 0) {
                             // Añadir más asientos a la reserva
-                            System.out.print("\n¿Cuántos asientos quieres reservar?: ");
-                            cuantosAsientos2 = Integer.parseInt(sc.nextLine());
+                            // System.out.print("\n¿Cuántos asientos quieres reservar?: ");
+                            //cuantosAsientos2 = Integer.parseInt(sc.nextLine());
 
                             // Crear reserva
                             reserva2 = new Reserva(nombrePax, pasaportePax, vuelo2);
 
-                            // Mensaje para confirmar reserva junto al método que genera el código de
-                            // reserva aleatoriamente
+                            /* Mensaje para confirmar reserva junto al método que genera el código de reserva aleatoriamente */
                             System.out.println("✔ Reserva confirmada - Código: " + reserva2.getCodigoReserva());
 
-                            vuelo2.reservarAsiento(cuantosAsientos2);
+                            vuelo2.reservarAsiento();
 
                         } else {
                             System.out.println("✖ Lo sentimos, el vuelo está completo. No hay asientos disponibles.");
                         }
                     }
-
                     break;
 
                 case 3:
                     System.out.print("\nIntroduce tu código de reserva: ");
                     reservaUser = sc.nextLine();
 
-                    // Para comprobar que la reserva no es null porque se ha creado en el caso 2; o
-                    // al contrario por si introducimos caso 3 sin hacer reserva, hacemos la
-                    // condición con != y además que coincida con el código de reserva
+                    /* Para comprobar que la reserva no es null porque se ha creado en el caso 2; o al contrario por si introducimos caso 3 sin hacer reserva, hacemos la condición con != y además que coincida con el código de reserva */
                     if (reserva1 != null && reservaUser.equals(reserva1.getCodigoReserva())) {
                         reserva1.mostrarInformacionReserva();
 
@@ -112,7 +108,6 @@ public class AppGestionVuelos {
                     } else {
                         System.out.println("✖ No se encontró ninguna reserva con ese código");
                     }
-
                     break;
 
                 case 4:
@@ -121,17 +116,28 @@ public class AppGestionVuelos {
 
                     if (reserva1 != null && reservaUser.equals(reserva1.getCodigoReserva())) {
                         
+                        reserva1.getVuelo().devolverAsiento();                      
+                        reserva1 = null;
+                        System.out.println("✔ Reserva cancelada exitosamente");
 
                     } else if (reserva2 != null && reservaUser.equals(reserva2.getCodigoReserva())) {
-                        reserva2.mostrarInformacionReserva();
+                        
+                        reserva2.getVuelo().devolverAsiento();
+                        reserva2 = null;
+                        System.out.println("✔ Reserva cancelada exitosamente");
 
+                        
                     } else {
                         System.out.println("✖ No se encontró ninguna reserva con ese código");
                     }
-
+                    break;
+                
+                case 0:
+                    System.out.println("\nGracias por usar nuestro sistema de reservas de vuelo, ¡qué tenga un buen día!");
                     break;
 
                 default:
+                    System.out.println("\n✖ No es una opción correcta, vuelva a intentarlo.");
                     break;
             }
 
