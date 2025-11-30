@@ -18,7 +18,6 @@ public class AppGestionVuelos {
 
         int opc;
         String reservaUser;
-        //int cuantosAsientos1, cuantosAsientos2;
 
         /* Iniciamos las reservas en null para poder acceder en el caso 3, ya que en el caso 2 vamos a guardar los datos una vez hecha la reserva */
         Reserva reserva1 = null;
@@ -55,16 +54,16 @@ public class AppGestionVuelos {
 
                         if (asientosDisponibles > 0) {
                             // Añadir más asientos a la reserva
-                            // System.out.print("\n¿Cuántos asientos quieres reservar?: ");
-                            //cuantosAsientos1 = Integer.parseInt(sc.nextLine());
+                            System.out.print("\n¿Cuántos asientos quieres reservar?: ");
+                            int cuantosAsientos1 = Integer.parseInt(sc.nextLine());
 
                             // Crear reserva
-                            reserva1 = new Reserva(nombrePax, pasaportePax, vuelo1);
+                            reserva1 = new Reserva(nombrePax, pasaportePax, vuelo1, cuantosAsientos1);
 
                             /* Mensaje para confirmar reserva junto al método que genera el código de reserva aleatoriamente */
                             System.out.println("✔ Reserva confirmada - Código: " + reserva1.getCodigoReserva());
 
-                            vuelo1.reservarAsiento();
+                            vuelo1.reservarAsiento(cuantosAsientos1);
 
                         } else {
                             System.out.println("✖ Lo sentimos, el vuelo está completo. No hay asientos disponibles.");
@@ -77,16 +76,16 @@ public class AppGestionVuelos {
 
                         if (asientosDisponibles > 0) {
                             // Añadir más asientos a la reserva
-                            // System.out.print("\n¿Cuántos asientos quieres reservar?: ");
-                            //cuantosAsientos2 = Integer.parseInt(sc.nextLine());
+                            System.out.print("\n¿Cuántos asientos quieres reservar?: ");
+                            int cuantosAsientos2 = Integer.parseInt(sc.nextLine());
 
                             // Crear reserva
-                            reserva2 = new Reserva(nombrePax, pasaportePax, vuelo2);
+                            reserva2 = new Reserva(nombrePax, pasaportePax, vuelo2, cuantosAsientos2);
 
                             /* Mensaje para confirmar reserva junto al método que genera el código de reserva aleatoriamente */
                             System.out.println("✔ Reserva confirmada - Código: " + reserva2.getCodigoReserva());
 
-                            vuelo2.reservarAsiento();
+                            vuelo2.reservarAsiento(cuantosAsientos2);
 
                         } else {
                             System.out.println("✖ Lo sentimos, el vuelo está completo. No hay asientos disponibles.");
@@ -115,14 +114,16 @@ public class AppGestionVuelos {
                     reservaUser = sc.nextLine();
 
                     if (reserva1 != null && reservaUser.equals(reserva1.getCodigoReserva())) {
-                        
-                        reserva1.getVuelo().devolverAsiento();                      
+                        int cuantosAsientos1 = reserva1.getCuantosAsientos();
+
+                        reserva1.getVuelo().devolverAsiento(cuantosAsientos1);                      
                         reserva1 = null;
                         System.out.println("✔ Reserva cancelada exitosamente");
 
                     } else if (reserva2 != null && reservaUser.equals(reserva2.getCodigoReserva())) {
-                        
-                        reserva2.getVuelo().devolverAsiento();
+                        int cuantosAsientos2 = reserva2.getCuantosAsientos();
+
+                        reserva2.getVuelo().devolverAsiento(cuantosAsientos2);
                         reserva2 = null;
                         System.out.println("✔ Reserva cancelada exitosamente");
 

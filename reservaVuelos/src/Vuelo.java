@@ -14,31 +14,31 @@ public class Vuelo {
 
     // Métodos propios
     //Caracterítica añadida: poder reservar más asientos si son familia
-    // public void reservarAsiento(int cuantosAsientos) {
-    //     if (this.asientosDisponibles <= 0) {
-    //         System.out.println("El vuelo está lleno");
-    //     } else {
-    //         this.asientosDisponibles -= cuantosAsientos;
-    //     }
-    // }
-    public void reservarAsiento() {
+    public void reservarAsiento(int cuantosAsientos) {
         if (this.asientosDisponibles <= 0) {
             System.out.println("El vuelo está lleno");
         } else {
-            this.asientosDisponibles -= 1;
+            this.asientosDisponibles -= cuantosAsientos;
         }
     }
+    // public void reservarAsiento() {
+    //     if (this.asientosDisponibles <= 0) {
+    //         System.out.println("El vuelo está lleno");
+    //     } else {
+    //         this.asientosDisponibles -= 1;
+    //     }
+    // }
 
     public void mostrarInformacionVuelo() {
-        System.out.println("\n\tNúmero de vuelo: " + getNumeroVuelo());
-        System.out.println("\tOrigen: " + getOrigen());
-        System.out.println("\tDestino: " + getDestino());
-        System.out.println("\tAsientos disponibles: " + getAsientosDisponibles() + " de " + getAsientosTotales());
+        System.out.println("\n\tNúmero de vuelo: " + this.numeroVuelo);
+        System.out.println("\tOrigen: " + this.origen);
+        System.out.println("\tDestino: " + this.destino);
+        System.out.println("\tAsientos disponibles: " + this.asientosDisponibles + " de " + this.asientosDisponibles);
     }
 
     //Método extra para devolver los asientos eliminados de una reserva
-    public void devolverAsiento() {
-        this.asientosDisponibles += 1;
+    public void devolverAsiento(int cuantosAsientos) {
+        this.asientosDisponibles += cuantosAsientos;
     }
   
     // Getters
