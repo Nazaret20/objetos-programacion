@@ -12,6 +12,33 @@ public class AppTechCorp {
         System.out.print("¿Qué opción necesitas hacer?: ");
     }
 
+    public static String datosString(Scanner sc, String pregunta) {
+        System.out.println(pregunta);
+        String dato = sc.nextLine();
+        return dato;
+    }
+
+    public static int datosInt(Scanner sc, String pregunta) {
+        System.out.println(pregunta);
+        int dato = Integer.parseInt(sc.nextLine());
+        return dato;
+    }
+
+    public static boolean validarTarjeta(Tarjeta tarjeta, int zona) {
+        if (tarjeta.verificarAcceso(zona)) {
+            System.out.println("\nACCESO PERMITIDO\n");
+            return true;
+        } else {
+            System.out.print("\nACCESO DENEGADO ");
+            if (tarjeta.isActiva() == false) {
+                System.out.println("por tarjeta desactivada");
+            } else if (zona > tarjeta.getNivelAcceso()) {
+                System.out.println("por nivel no correspondiente");
+            }
+            return false;
+        }
+    }
+
     public static void main(String[] args) throws Exception {
         Tarjeta tarjeta1 = new Tarjeta("T001", "Ana Pérez", 1);
         Tarjeta tarjeta2 = new Tarjeta("T002", "Juan López", 3);
@@ -35,57 +62,24 @@ public class AppTechCorp {
                         "3. Laboratorio (Nivel 3)\r\n" + //
                         "4. Sala de Servidores (Nivel 4)");
 
-                    System.out.print("¿A qué zona quieres acceder?: ");
-                    int zona = Integer.parseInt(sc.nextLine());
+                    int zona = datosInt(sc, "¿A qué zona quieres acceder?: ");
 
-                    System.out.print("\nIntroduce el ID: ");
-                    id = sc.nextLine();
+                    id = datosString(sc, "\nIntroduce el ID: ");
 
-                    // Verificar tarjeta 1
                     if (id.equals(tarjeta1.getId())) {
-                        if (tarjeta1.verificarAcceso(zona)) {
-                            System.out.println("\nACCESO PERMITIDO\n");
-                        } else {
-                            System.out.print("\nACCESO DENEGADO ");
-                            if (tarjeta1.isActiva() == false) {
-                                System.out.println("por tarjeta desactivada");
-                            }
-                            if (zona > tarjeta1.getNivelAcceso()) {
-                                System.out.println("por nivel no correspondiente");
-                            }
-                        }
-                        // Verificar tarjeta 2
+                        validarTarjeta(tarjeta1, zona);
                     } else if (id.equals(tarjeta2.getId())) {
-                        if (tarjeta2.verificarAcceso(zona)) {
-                            System.out.println("\nACCESO PERMITIDO\n");
-                        } else {
-                            System.out.print("\nACCESO DENEGADO ");
-                            if (tarjeta2.isActiva() == false) {
-                                System.out.println("por tarjeta desactivada");
-                            }
-                            if (zona > tarjeta2.getNivelAcceso()) {
-                                System.out.println("por nivel no correspondiente");
-                            }
-                        }
-                        // Verificar tarjeta 3
+                        validarTarjeta(tarjeta2, zona);
                     } else if (id.equals(tarjeta3.getId())) {
-                        if (tarjeta3.verificarAcceso(zona)) {
-                            System.out.println("\nACCESO PERMITIDO\n");
-                        } else {
-                            System.out.print("\nACCESO DENEGADO ");
-                            if (tarjeta3.isActiva() == false) {
-                                System.out.println("por tarjeta desactivada");
-                            }
-                        }
+                        validarTarjeta(tarjeta3, zona);
                     } else {
                         System.out.println("Tarjeta no válida");
                     }
-
                     break;
 
                 case 2:
-                    System.out.print("\nIntroduce el ID: ");
-                    id = sc.nextLine();
+                    id = datosString(sc, "\nIntroduce el ID: ");
+
 
                     System.out.println("GESTIÓN DE TARJETA [ID]\r\n" + //
                         "a) Activar tarjeta\r\n" + //
@@ -94,8 +88,7 @@ public class AppTechCorp {
                         "d) Disminuir nivel de acceso\r\n" + //
                         "e) Volver al menú principal");
 
-                    System.out.println("¿Qué gestión necesitas hacer?");
-                    String opcCase2 = sc.nextLine();
+                    String opcCase2 = datosString(sc, "¿Qué gestión necesitas hacer?");
 
                     switch (opcCase2) {
                         case "a":
