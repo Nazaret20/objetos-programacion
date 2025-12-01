@@ -45,6 +45,10 @@ public class Tarjeta {
             return false;
         } else {
             this.nivelAcceso++;
+            if (this.nivelAcceso > 4) {
+                System.out.println("No puedes aumentar el nivel más del 4");
+                this.nivelAcceso = 4;
+            }
             return true;
         }
     }
@@ -54,6 +58,10 @@ public class Tarjeta {
             return false;
         } else {
             this.nivelAcceso--;
+            if (this.nivelAcceso < 1) {
+                System.out.println("No puedes disminuir el nivel menos del 1");
+                this.nivelAcceso = 1;
+            }
             return true;
         }
     }

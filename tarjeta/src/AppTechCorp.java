@@ -119,9 +119,12 @@ public class AppTechCorp {
                             break;
 
                         case "c":
-                            boolean aumentoDeNivel = tarjeta1.aumentarNivelAcceso();
+                            boolean aumentoDeNivel = tarjeta3.aumentarNivelAcceso();
+
                             if (aumentoDeNivel) {
-                                
+                                System.out.println("Su nivel ha aumentado, ahora tiene acceso al nivel " + tarjeta3.getNivelAcceso());
+                            } else {
+                                tarjeta3.aumentarNivelAcceso();
                             }
                             break;
 
@@ -138,6 +141,13 @@ public class AppTechCorp {
                     }
 
                     break;
+                
+                case 3:
+                    tarjeta1.mostrarInformacion();
+                    tarjeta2.mostrarInformacion();
+                    tarjeta3.mostrarInformacion();
+                    break;
+
                 default:
                     break;
             }
