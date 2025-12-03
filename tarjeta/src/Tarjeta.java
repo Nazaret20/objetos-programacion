@@ -87,7 +87,7 @@ public class Tarjeta {
         System.out.println("Propietario: " + getPropietario());
         System.out.println("Estado: " + estado);
         System.out.println("Nivel de acceso: " + getNivelAcceso());
-        System.out.println("--------------------------");
+        System.out.println("\n--------------------------\n");
 
     }
 

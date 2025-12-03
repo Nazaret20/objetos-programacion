@@ -43,6 +43,7 @@ public class AppTechCorp {
         Tarjeta tarjeta1 = new Tarjeta("T001", "Ana Pérez", 1);
         Tarjeta tarjeta2 = new Tarjeta("T002", "Juan López", 3);
         Tarjeta tarjeta3 = new Tarjeta("T003", "María López", 4);
+        Tarjeta tarjetaTemp = null;
         int opc;
         String id;
 
@@ -68,10 +69,13 @@ public class AppTechCorp {
 
                     if (id.equals(tarjeta1.getId())) {
                         validarTarjeta(tarjeta1, zona);
+
                     } else if (id.equals(tarjeta2.getId())) {
                         validarTarjeta(tarjeta2, zona);
+
                     } else if (id.equals(tarjeta3.getId())) {
                         validarTarjeta(tarjeta3, zona);
+
                     } else {
                         System.out.println("Tarjeta no válida");
                     }
@@ -80,54 +84,69 @@ public class AppTechCorp {
                 case 2:
                     id = datosString(sc, "\nIntroduce el ID: ");
 
-
-                    System.out.println("GESTIÓN DE TARJETA [ID]\r\n" + //
+                    System.out.println("GESTIÓN DE TARJETA ["+ id +"]\r\n" + //
                         "a) Activar tarjeta\r\n" + //
                         "b) Desactivar/Bloquear tarjeta\r\n" + //
                         "c) Aumentar nivel de acceso\r\n" + //
                         "d) Disminuir nivel de acceso\r\n" + //
                         "e) Volver al menú principal");
+                    
+                        switch (id) {
+                            case "T001":
+                                tarjetaTemp = tarjeta1;
+                                
+                            break;
+                                case "T002":
+                            tarjetaTemp = tarjeta1;
+                            
+                            break;
+                                case "T003":
+                            tarjetaTemp = tarjeta1;
+                                
+                                break;
+                        
+                            default:
+                                break;
+                        }
 
                     String opcCase2 = datosString(sc, "¿Qué gestión necesitas hacer?");
 
                     switch (opcCase2) {
                         case "a":
-                            boolean seActivo = tarjeta1.activarTarjeta();
-                            if (!seActivo) {
-                                System.out.println("Su tarjeta ya está activada");
+                            if (tarjetaTemp.activarTarjeta()) {
+                                System.out.println("Activación correcta");
                             } else {
-                                tarjeta1.activarTarjeta();
-                                System.out.println("Su tarjeta se ha activado");
+                                System.out.println("Fallo de activación");
                             }
                             break;
                     
                         case "b":
-                            boolean seDesactivo = tarjeta1.desactivarTarjeta();
-                            if (!seDesactivo) {
-                                System.out.println("Su tarjeta ya está desactivada");
+                           if (tarjetaTemp.desactivarTarjeta()) {
+                                System.out.println("Desactivación correcta");
                             } else {
-                                tarjeta1.desactivarTarjeta();
-                                System.out.println("Su tarjeta se ha desactivado");
-                            } 
-                            break;
-
-                        case "c":
-                            boolean aumentoDeNivel = tarjeta3.aumentarNivelAcceso();
-
-                            if (aumentoDeNivel) {
-                                System.out.println("Su nivel ha aumentado, ahora tiene acceso al nivel " + tarjeta3.getNivelAcceso());
-                            } else {
-                                tarjeta3.aumentarNivelAcceso();
+                                System.out.println("Fallo de desactivación");
                             }
                             break;
 
-                        // case "d":
-                        //     tarjeta1.disminuirNivelAcceso();
-                        //     break;
+                        case "c":
+                            if (tarjetaTemp.aumentarNivelAcceso()) {
+                                System.out.println("Aumento de nivel correcto");
+                            } else {
+                                System.out.println("Fallo de aumento de nivel");
+                            }
+                            break;
 
-                        // case "e":
-                        //     menu();
-                        //     break;
+                        case "d":
+                           if (tarjetaTemp.disminuirNivelAcceso()) {
+                                System.out.println("Disminución de nivel correcto");
+                            } else {
+                                System.out.println("Fallo de disminución");
+                            }
+                            break;
+
+                        case "e":
+                            menu();
+                            break;
 
                         default:
                             break;
@@ -141,7 +160,11 @@ public class AppTechCorp {
                     tarjeta3.mostrarInformacion();
                     break;
 
-                default:
+                case 4:
+                    id = datosString(sc, "Introduce el ID: ");
+                   
+                        break;
+                    default:
                     break;
             }
 
