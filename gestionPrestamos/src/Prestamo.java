@@ -9,54 +9,133 @@ public class Prestamo {
         this.cantidad = cantidad;
         this.tiempo = tiempo;
         this.aprobado = false;
-        this.tasaInteres = 5;
+        this.tasaInteres = tasaInteres * 5 / 100;
     }
 
     //Métodos propios
     public boolean evaluarPrestamo() {
+        if (calcularCuotaMensual() <= (this.ingresos * 30) / 100 && this.cantidad <= this.ingresos * 10 && (this.tiempo <= 1 || this.tiempo >= 30)) {
+            this.aprobado = true;
+            if (this.aprobado == true) {
+                int anios = 0;
+                switch (this.tiempo) {
+                    case 1:
+                        if (this.tiempo >= 1 || this.tiempo <= 5) {
+                            this.tasaInteres = this.tasaInteres * 4 / 100;
+                        }
+                        break;
+                
+                    case 2: 
+                        if (this.tiempo >= 6 || this.tiempo <= 10) {
+                            this.tasaInteres = this.tasaInteres;
+                        }
+                        break;
         
-        return true;
+                    case 3:
+                        if (this.tiempo >= 11 || this.tiempo <= 20) {
+                            this.tasaInteres = this.tasaInteres * 6 / 100;
+                        }
+                        break;
+        
+                    case 4:
+                        if (this.tiempo >= 21 || this.tiempo <= 30) {
+                            this.tasaInteres = this.tasaInteres * 7 / 100;
+                        }
+                    default:
+                        break;
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
+
+
     }
 
     public double calcularCuotaMensual() {
-        return 0;
+        if (isAprobado()) {
+            double cuotaMensual = (cantidad + (cantidad * tasaInteres/100 * tiempo)) / (tiempo * 12);
+            return cuotaMensual;
+        } else {
+            return 0;
+        }
     }
 
     public double calcularInteresTotal() {
-        return 0;
+        if (isAprobado()) {
+            double interesTotal = cantidad * tasaInteres/100 * tiempo;
+            return interesTotal;
+        } else {
+            return 0;
+        }
     }
 
     public double calcularCantidadTotal() {
+        if (isAprobado()) {
+            double cantDevolver = this.cantidad + calcularInteresTotal();
+            return cantDevolver;
+        }
         return 0;
     }
 
     public boolean modificarTiempo(double nuevoTiempo) {
-        return true;
+        if (isAprobado()) {
+            return false;
+        } else {
+            if (nuevoTiempo >= 1 || nuevoTiempo <= 30) {
+                this.tiempo = nuevoTiempo;
+                calcularInteresTotal();
+            }
+            return true;
+        }
+    }
+
+    public boolean modificarCantidad(double nuevaCantidad) {
+        if (!isAprobado() && nuevaCantidad > 0) {
+            this.cantidad = nuevaCantidad;
+            return true;
+        } else {
+            return false; 
+        }
     }
 
     public boolean rechazarPrestamo() {
-        return true;
+        if (isAprobado()) {
+            this.aprobado = false;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void mostrarDetalles() {
         System.out.println("------------------------------------");
-        System.out.println("Nombre del solicitante: " + this.nombre);
-        System.out.println("Ingresos mensuales: " + this.ingresos);
-        System.out.println("Cantidad solicitada: " + this.cantidad);
-        System.out.println("Tasa de interés aplicada: " + this.tasaInteres);
-        System.out.println("Estado: " + this.aprobado);
-
-        if (evaluarPrestamo()) {
+        System.out.println("Nombre del solicitante: " + getNombre());
+        System.out.println("Ingresos mensuales: " + getIngresos());
+        System.out.println("Cantidad solicitada: " + getCantidad());
+        System.out.println("Plazo: " + getTiempo() + " años");
+        System.out.println("Tasa de interés aplicada: " + getTasaInteres());
+        
+        if (isAprobado()) {
+            System.out.println("Estado: " + "Aprobado");
             System.out.println("Cuota mensual: " + calcularCuotaMensual());
             System.out.println("Interés total: " + calcularInteresTotal());
             System.out.println("Cantidad total a devolver: " + calcularCantidadTotal());
-        }
 
+        } else {
+            System.out.println("Estado: Rechazado");
+        }
         System.out.println("------------------------------------");
     }
 
     public void mostrarTablaResumen() {
-
+        if (isAprobado()) {
+            System.out.println("Capital: " + getCantidad());
+            System.out.println("Total intereses: " + calcularInteresTotal());
+            System.out.println("Cuota mensual: " + calcularCuotaMensual());
+            System.out.println("Número de cuotas: " + this.tiempo * 12);
+        } 
     }
 
     
