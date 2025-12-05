@@ -55,10 +55,15 @@ public class Matricula {
     }
 
     public double calcularCreditosMediosPorAsignatura() {
-        return 0;
+        double creditosMediosAsig = this.creditosTotales / this.numeroAsignaturas;
+        double redondeoCreditosMediosAsig = Math.round(creditosMediosAsig * 10)  / 10;
+        return redondeoCreditosMediosAsig;
     }
 
     public boolean añadirAsignatura(int creditosAsignatura) {
+        if (validarMatricula() || !validarMatricula()) {
+            return false;
+        }
         return true;
     }
 

@@ -14,43 +14,33 @@ public class Prestamo {
 
     //Métodos propios
     public boolean evaluarPrestamo() {
-        if (calcularCuotaMensual() <= (this.ingresos * 30) / 100 && this.cantidad <= this.ingresos * 10 && (this.tiempo <= 1 || this.tiempo >= 30)) {
+        if ((calcularCuotaMensual() <= (getIngresos() * 30) / 100) && (getCantidad() <= getIngresos() * 10) && (getTiempo() >= 1 || getTiempo() <= 30)) {
             this.aprobado = true;
-            if (this.aprobado == true) {
-                int anios = 0;
-                switch (this.tiempo) {
-                    case 1:
-                        if (this.tiempo >= 1 || this.tiempo <= 5) {
-                            this.tasaInteres = this.tasaInteres * 4 / 100;
-                        }
-                        break;
-                
-                    case 2: 
-                        if (this.tiempo >= 6 || this.tiempo <= 10) {
-                            this.tasaInteres = this.tasaInteres;
-                        }
-                        break;
-        
-                    case 3:
-                        if (this.tiempo >= 11 || this.tiempo <= 20) {
-                            this.tasaInteres = this.tasaInteres * 6 / 100;
-                        }
-                        break;
-        
-                    case 4:
-                        if (this.tiempo >= 21 || this.tiempo <= 30) {
-                            this.tasaInteres = this.tasaInteres * 7 / 100;
-                        }
-                    default:
-                        break;
-                }
-            }
+            this.tasaInteres = ajustarTasa();
             return true;
         } else {
             return false;
         }
 
 
+    }
+
+    public double ajustarTasa() {
+        double tasa = 0;
+        if (getTiempo() >= 1 && getTiempo() <= 5) {
+            tasa = 4;
+        }
+        if (getTiempo() >= 6 && getTiempo() <= 10) {
+            tasa = 5;
+        }
+        if (getTiempo() >= 11 && getTiempo() <= 20) {
+            tasa = 6;
+        }
+        if (getTiempo() >= 21 && getTiempo() <= 30) {
+            tasa = 7;
+        } 
+        
+        return tasa;    
     }
 
     public double calcularCuotaMensual() {
@@ -75,19 +65,18 @@ public class Prestamo {
         if (isAprobado()) {
             double cantDevolver = this.cantidad + calcularInteresTotal();
             return cantDevolver;
+        } else {
+            return 0;
         }
-        return 0;
     }
 
     public boolean modificarTiempo(double nuevoTiempo) {
-        if (isAprobado()) {
-            return false;
-        } else {
-            if (nuevoTiempo >= 1 || nuevoTiempo <= 30) {
-                this.tiempo = nuevoTiempo;
-                calcularInteresTotal();
-            }
+        if (!isAprobado() && nuevoTiempo >= 1 && nuevoTiempo <= 30) {
+            this.tiempo = nuevoTiempo;
+            this.tasaInteres = ajustarTasa();
             return true;
+        } else {
+            return false;
         }
     }
 
@@ -136,6 +125,22 @@ public class Prestamo {
             System.out.println("Cuota mensual: " + calcularCuotaMensual());
             System.out.println("Número de cuotas: " + this.tiempo * 12);
         } 
+    }
+
+    public String infoTabla() {
+        String linea = "";
+        linea += getNombre() + "\t| ";
+        linea += getIngresos() + "\t| ";
+        linea += getCantidad() + "\t| ";
+        linea += getTiempo() + "\t| ";
+        
+        if(isAprobado()) {
+            linea += "Aprobado";
+        } else {
+            linea += "Rechazado";
+        }
+
+        return linea;
     }
 
     
