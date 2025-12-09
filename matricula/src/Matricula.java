@@ -17,33 +17,66 @@ public class Matricula {
 
     //Métodos propios
     public boolean validarMatricula() {
-        return true;
+        if (validarAsignaturas() && validarCreditosTotales() && validarCreditoXAsignatura()) {
+            this.estado = "Confirmada";
+            calcularTasaAdministrativa();
+            return true;  
+        } else {
+            this.estado = "Rechazada";
+            return false;
+        }
     }
 
+    private boolean validarAsignaturas() {
+        if (this.numeroAsignaturas >= 3 && this.numeroAsignaturas <= 10) {
+            return true;
+        } 
+        return false;
+    }
+
+    private boolean validarCreditosTotales() {
+        if (this.creditosTotales >= 18 && this.creditosTotales <= 75) {
+            return true; 
+        }
+        return false;
+    }
+
+    private boolean validarCreditoXAsignatura() {
+        double creditoXAsigntura = calcularCreditosMediosPorAsignatura();
+        if (creditoXAsigntura >= 3 && creditoXAsigntura <= 12) {
+            return true;
+        } 
+        return false;
+    }
+
+    /*-------------------------------------------*/
+    
     public double calcularCosteMatricula() {
         if (validarMatricula()) {
             double costeTotalMatricula = this.creditosTotales * this.precioPorCredito * (1 - this.descuentoBeca / 100);
 
-            double redondeoCosteMatricula = Math.round(costeTotalMatricula * 100) / 100;  
+            double redondeoCosteMatricula = Math.round(costeTotalMatricula * 100) / 100.0;  
             return redondeoCosteMatricula;
         } else {
             return 0;
         }
     }
 
+    /*-------------------------------------------*/
+
     public int calcularTasaAdministrativa() {
         int tasaBase = 150;
         if (isTieneBeca()) {
             tasaBase = 50;
             return tasaBase;
-        }
-
-        if (this.estado == "Pendiente") {
+        } else if (this.estado == "Pendiente") {
             return 0;
-        }
-
-        return tasaBase;
+        } else {
+            return tasaBase;
+        } 
     }
+
+    /*-------------------------------------------*/
 
     public double calcularCosteTotal() {
         if (validarMatricula()) {
@@ -54,43 +87,109 @@ public class Matricula {
         }
     }
 
+    /*-------------------------------------------*/
+
     public double calcularCreditosMediosPorAsignatura() {
         double creditosMediosAsig = this.creditosTotales / this.numeroAsignaturas;
-        double redondeoCreditosMediosAsig = Math.round(creditosMediosAsig * 10)  / 10;
+        double redondeoCreditosMediosAsig = Math.round(creditosMediosAsig * 10)  / 10.0;
         return redondeoCreditosMediosAsig;
     }
 
+    /*-------------------------------------------*/
+
     public boolean añadirAsignatura(int creditosAsignatura) {
-        if (validarMatricula() || !validarMatricula()) {
+        if (this.estado == "Confirmada" || this.estado == "Rechazada") {
             return false;
+        } else if (creditosAsignatura > 3 && creditosAsignatura < 12) {
+            return false;
+        } else if (this.creditosTotales > 75) {
+            return false;
+        } else if (this.numeroAsignaturas > 10) {
+            return false;
+        } else {
+            this.numeroAsignaturas++;
+            this.creditosTotales += creditosAsignatura;
+            return true;
         }
-        return true;
     }
+
+    //TO DO SEPARAR FUNCIONES
+
+    /*-------------------------------------------*/
 
     public boolean eliminarAsignatura(int creditosAsignatura) {
-        return true;
+        if (this.estado == "Confirmada" || this.estado == "Rechazada") {
+            return false;
+        } else if (creditosAsignatura > this.creditosTotales && creditosAsignatura < 0) {
+            return false;
+        } else if (this.creditosTotales > 18) {
+            return false;
+        } else {
+            if (this.numeroAsignaturas > 1) {
+                this.numeroAsignaturas--;
+                this.creditosTotales -= creditosAsignatura;
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
+
+    /*-------------------------------------------*/
 
     public boolean modificarBeca(boolean nuevaBeca) {
-        return true;
+        if (this.estado == "Confirmada" || this.estado == "Rechazada") {
+            return false;
+        } else {
+            if (nuevaBeca) {
+                this.descuentoBeca = 50;
+                return true;
+            } else {
+                this.descuentoBeca = 0;
+                return false;
+            }
+        }
     }
+
+    /*-------------------------------------------*/
 
     public double calcularPagoFraccionado(int numPlazos) {
-        return 0;
+        if (this.estado == "Pendiente" || this.estado == "Rechazada") {
+            return 0;
+        }
+
+        if (numPlazos == 2 || numPlazos == 3 || numPlazos == 5) {
+            double pagoFracc = (calcularCosteTotal() * 1.03) / numPlazos;
+            return pagoFracc;
+        } else {
+            return 0;
+        }
     }
+
+    /*-------------------------------------------*/
 
     public boolean aplicarDescuentoEspecial(double porcentaje) {
-        return true;
+        if (this.estado == "Confirmada" && (porcentaje >= 5  && porcentaje <= 30) && ((this.descuentoBeca + porcentaje) <= 70)) {
+            this.descuentoBeca += porcentaje;
+            return true;
+        } else {
+            return false;
+        }
     }
 
+    /*-------------------------------------------*/
+
     public boolean rechazarMatricula() {
-        if (validarMatricula()) {
+        if (this.estado != "Rechazada") {
             this.estado = "Rechazada";
             return true;
         } else {
             return false;
         }
     }
+
+    /*-------------------------------------------*/
+
 
     public void mostrarDetalles() {
         System.out.print("Estudiante: " + getNombreEstudiante());
@@ -99,13 +198,18 @@ public class Matricula {
         System.out.println("Créditos totales: " + getCreditosTotales());
         System.out.println("Matricula: " + getEstado());
         System.out.println("Beca: " + isTieneBeca() + " con descuento " + getDescuentoBeca());
-        if (isTieneBeca()) {
+        if (this.estado == "Confirmada") {
             System.out.println("Coste de matrícula: " + calcularCosteMatricula());
             System.out.println("Tasa administrativa: " + calcularTasaAdministrativa());
             System.out.println("Coste total a pagar: " + calcularCosteTotal());
-            //ahorro por beca
+            System.out.println("Ahorro por beca: " + ahorroDeBeca());
         }
+    }
 
+    private double ahorroDeBeca() {
+        double total = calcularCosteMatricula();
+        double totalDescuentoAplicado = total * (this.descuentoBeca / 100);
+        return totalDescuentoAplicado;
     }
 
     public void mostrarReciboMatricula() {
