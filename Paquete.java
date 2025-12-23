@@ -15,7 +15,7 @@ public class Paquete {
     public String obtenerTipoEnvio() {
         if (distanciaKm < 50) {
             return "Local";
-        } else if (distanciaKm > 50 || distanciaKm < 200) {
+        } else if (distanciaKm > 50 && distanciaKm < 200) {
             return "Provincial";
         } else if (distanciaKm > 200) {
             return "Nacional";
@@ -40,10 +40,32 @@ public class Paquete {
 
         return resultKgMasKm + recargo;
     }
-    
+
     @Override
     public String toString() {
-        return "\n== Datos del paquete ==\n" + "Código: " + this.codigo + "\nPeso:" + this.pesoKg + "\nDistancia: " + this.distanciaKm + "\nCoste: " + calcularCoste();
+        return "\n== Datos del paquete ==\n" + "Código: " + this.codigo + "\nPeso: " + this.pesoKg + " kg" + "\nDistancia: " + this.distanciaKm + " km" + "\nCoste: " + calcularCoste() + " €" + "\nTipo de envío: " + obtenerTipoEnvio();
+    }
+    
+    /*-------------------------- */
+    public void diasEntrega() {
+        int dias = 0;
+        
+        if (this.distanciaKm < 100) {
+            dias = 1;
+        } else if (this.distanciaKm >= 100 && this.distanciaKm <= 300) {
+            dias = 2;
+        } else if (this.distanciaKm >= 301 && this.distanciaKm <= 500) {
+            dias = 3;
+        } else {
+            dias = 5;
+        }
+        
+        if (isUrgente() && dias > 1) {
+            dias -= 1;
+        }
+
+        System.out.println("\nEl paquete tardará en llegar: " + dias + " días");
+
     }
 
     //Getters
